@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>d3 day1</title>
+  </head>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src='../json/day1.js'></script>
+  <style>
+  .chart div {
+      background-color: steelblue;
+      margin:1px;
+      text-align: right;
+      color:white;
+      padding: 3px
+  }
+  </style>
+  <body>
+    <div class="chart"></div>
+    <script>
+    var x = d3.scaleLinear()
+              .domain([0, d3.max(data)])
+              .range([0, 420]);
+
+    d3.select(".chart")
+      .selectAll("div")
+      .data(data)
+      .enter()
+      .append("div")
+      .style("width", function(d) { return x(d) + "px"; })
+      .text(function(d) { return d; });
+    </script>
+  </body>
+</html>

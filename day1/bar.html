@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <style>
+  body{
+      font-family: "helvetica";
+    }
+  .rect {
+      min-height: 30px;
+      min-width: 10px;
+      background-color: steelblue;
+      margin-bottom: 2px;
+      font-size: 11px;
+      color: #fff;
+      text-align: right;
+      padding-right: 2px;
+  }
+  </style>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <body>
+    <script>
+    var data = [10, 15, 30, 50, 80, 65, 55, 30, 20, 10, 8];
+
+        var dataRange = d3.scaleLinear() //创建一个值域的线性比例尺
+        .domain([0,100])
+        .range([0,300]);
+
+        var colorRange = d3.scaleLinear() //创建一个颜色的线性比例尺
+        .domain([0,100])
+        .range(["#ccc", "#000"]);
+
+        function render(data) {
+        // Enter
+            d3.select("body").selectAll("div.rect") //“应该”选择第一个body元素以及其下的类名为"h-bar"的div标签
+             .data(data) //绑定数据与图形
+             .enter() //进入状态（增加图形匹配多余的数据）
+             .append("div") //添加div
+              .attr("class","rect") //添加类名
+              .append("span"); //添加span
+        // Update
+            d3.select("body").selectAll("div.rect") //选择第一个body元素以及其下的类名为"h-bar"的div标签
+             .data(data) //绑定数据与图形
+             .style("width",function(d){
+                return dataRange(d) + "px"; //调用函数返回与该图形绑定的数据d
+             })
+             .style("background-color",function(d){
+                return colorRange(d); //调用函数返回与该图形绑定的数据d
+             })
+             .select("span")
+              .text(function(d){
+                return d; //调用函数返回与该图形绑定的数据d
+             });
+        // Exit
+            d3.select("body").selectAll("div.rect")
+             .data(data)
+             .exit() //退出状态（删除没有数据的多余的图形）
+             .remove();
+        }
+
+        render(data); //第一次执行
+
+        d3.interval(function(){
+            data.shift(); //删除数组的第一个数据
+            data.push(Math.round(Math.random() * 100)); //在数组后增加一个1-100的随机数
+            render(data);
+        },600); //1s执行一次
+
+
+    </script>
+  </body>
+</html>

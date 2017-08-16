@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <body>
+    <svg width="720" height="120"></svg>
+    <script >
+    var svg = d3.select("svg");
+
+    var circle = svg.selectAll("circle")
+        .data([32, 57, 112, 293]);
+
+    var circleEnter = circle.enter().append("circle");
+
+    circleEnter.attr("cy", 60);
+    circleEnter.attr("cx", function(d, i) { return i * 100 + 30; });
+    circleEnter.attr("r", function(d) { return Math.sqrt(d); });
+    circleEnter.attr("fill", 'steelblue');
+    </script>
+  </body>
+</html>
