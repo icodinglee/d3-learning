@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <style>
+  body{
+      font-family: "helvetica";
+    }
+
+    svg {
+        box-sizing: content-box
+    }
+  .axis--x path {
+    display: none;
+  }
+  </style>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src='../data/day2.js'></script>
+  <body>
+    <script>
+    var initWidth = 340
+    var initHeight = 500
+
+    var padding = { left:40, top:10, right:10, bottom: 20}
+
+    var height = initWidth - padding.top - padding.bottom
+    var width  = initHeight - padding.left - padding.right
+
+
+    var svg = d3.select("body")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .style("padding-left", padding.left)
+                .style("padding-right", padding.right)
+                .style("padding-top", padding.top)
+                .style("padding-bottom", padding.bottom)
+    
+
+     //添加y轴坐标轴 
+        
+        //y轴比例尺
+        let ydata = data.map(function(e, i){ return e.y})
+        let yScale = d3.scaleLinear()
+         .domain([0, d3.max(ydata)])
+         .range([height , 0]);
+         
+         let _yScale = d3.scaleLinear()
+         .domain([0, d3.max(ydata)])
+         .range([0, height]); 
+
+        //定义y轴
+        let yAxis = d3.axisLeft(yScale);
+
+        //添加y轴
+        svg.append("g")
+        .attr("class","axis")
+        .attr("transform","translate(" + 0 + "," + 0 + ")")
+        .call(yAxis);
+
+     //添加x轴坐标轴
+
+         //x轴比例尺
+         let xData = data.map(function(e, i){ return e.x})
+         let xScale = d3.scaleBand()
+                        .domain(xData)
+                        .rangeRound([0, width])
+                        .padding(0.1)
+        //定义x轴
+        let xAxis = d3.axisBottom(xScale)
+        
+        //添加x轴
+         svg.append("g")
+            .attr("class","axis--x")
+            .attr("transform","translate(" + "0 ," + height + ")")
+            .call(xAxis);
+
+    //添加柱
+    var rect = svg.selectAll("rect")
+                  .data(data)
+                  .enter()
+                  .append("rect")
+                  .attr("x", function(d, i){
+                      return xScale(d.x)
+                  })
+                  .attr("y", function(d){
+                      return height -  _yScale(d.y)
+                  })
+                  .attr("width", xScale.bandwidth())
+                  .attr("height", function(d){
+                      return _yScale(d.y)
+                  })
+                  .attr("fill", "steelBlue")
+                  .on("click",function(d){
+                      console.log(d.x+":"+d.y)
+                  })
+                  .on("mouseover",function(){
+                      d3.select(this).attr("fill", "yellow")
+                  })
+                  .on("mouseout", function(){
+                      d3.select(this).attr("fill","steelBlue")
+                  })
+     
+
+    var text = svg.append("g").selectAll("text")
+                .data(data)
+                .enter()
+                .append("text")
+                .attr("x", function(d, i){
+                      return xScale(d.x)
+                  })
+                .attr("y", function(d){
+                      return height -  _yScale(d.y)
+                })
+                .attr("dy", "1em")
+                .attr("dx", xScale.bandwidth() / 2)
+                .attr("text-anchor", "middle")
+                .attr("font-size", '14px')
+                .attr("fill", "#fff")
+                .text(function(d){
+                    return d.y
+                })
+
+        //  var brush = svg.append("g")
+        //      .attr("class", "brush")
+        //     .call(d3.brushX()
+        //             .on("start", function(){ 
+                        
+        //             })
+        //             .on("end", function(e) {
+        //                 var selection = d3.event.selection;
+        //                 console.log(selection)
+        //             })
+        //     )
+    </script>
+  </body>
+</html>
