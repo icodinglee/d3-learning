@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>d3饼图制作</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src='../data/day3.js'></script>
+    <body>
+        <script>
+            var dataset = { startAngle: 0, endAngle: Math.PI * 0.75}
+
+            var svg = d3.select("body")
+                        .append("svg")
+                        .attr("width", 300)
+                        .attr("height", 300)
+
+            //创建一个弧生成器
+            var arcPath = d3.arc()
+                            .innerRadius(50)
+                            .outerRadius(100)
+            
+            //添加路径
+            svg.append("path")
+                .attr("d", arcPath(dataset))
+                .attr("transform", "translate(150, 150)")
+                .attr("stroke", "black")
+                .attr("stroke-width", "2px")
+                .attr("fill", "yellow")
+        </script>         
+    </body>
+</html>

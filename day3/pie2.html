@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>d3饼图制作</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src='../data/day3.js'></script>
+    <body>
+        <script>
+            const width = 300 
+            const height = 300
+
+            // 进行数据转换
+            var pie =d3.pie()
+                       .sort(null)
+                       .value(function(d){ return d[1] })
+                      
+            var pieData = pie(data)
+            console.log(pieData)
+
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", width)
+                .attr("height",height)
+
+            //创建一个弧生成器
+            var arc = d3.arc()
+                            .innerRadius(0)
+                            .outerRadius(width / 3)
+            
+            var color = d3.scaleOrdinal(d3.schemeCategory20)
+
+            //添加路径
+              //添加对应的弧组，即对应的弧元素<g>  
+              var arcs = svg.selectAll("g")
+                            .data(pieData)
+                            .enter()
+                            .append("g")
+                            .attr("transform", function(){
+                                return `translate(${ width /2 }, ${ height / 2})`
+                            })
+             //添加弧的路径元素
+              arcs.append("path")
+                   .attr("fill", function (d, i) { return color(i)})
+                   .attr("d", function (d) { return arc(d) })
+
+            //添加文字
+              arcs.append("text")
+                   .attr("transform", function(d){ 
+                       var x = arc.centroid(d)[0] * 1.5
+                       var y = arc.centroid(d)[1] * 1.5
+                       return `translate(${x}, ${y})`
+                   })
+                  .text(function(d){
+                        var percent =  Number(d.value) / d3.sum(data, function(d){ return d[1]}) *100
+                        return percent.toFixed(2) + "%"
+                  })
+                  .attr("text-anchor", "middle")
+                  .attr("fill", "#fff")
+                  .style("font-size", "10px")
+                    
+            // 添加弧外文字
+             arcs.append("line")
+                 .attr("stroke", "#666")
+                 .attr("x1",function(d){ return arc.centroid(d)[0] * 2})
+                 .attr("y1",function(d){ return arc.centroid(d)[1] * 2})
+                 .attr("x2",function(d){ return arc.centroid(d)[0] * 2.4})
+                 .attr("y2",function(d){ return arc.centroid(d)[1] * 2.4})
+
+             arcs.append("text")
+                  .attr("text-anchor", "middle")
+                  .attr("transform", function(d){
+                      var x = arc.centroid(d)[0] * 2.6
+                      var y = arc.centroid(d)[1] * 2.6
+                      return `translate(${x}, ${y})`
+                  })
+                 .text(function(d){
+                     return d.data[0]
+                 })
+                 .attr("fill", "#666")
+                 .style("font-size",' 14px')
+        </script>         
+    </body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>d3饼图制作</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <style>
+        .tooltip {
+            position: absolute;
+            width: 100;
+            height: auto;
+            font-size: 14px;
+            text-align: center;
+            border: 1px solid #111;
+            border-radius: 5px;
+            background-color: #fff
+        }
+    </style>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src='../data/day3.js'></script>
+    <body>
+        <script>
+            const width = 300 
+            const height = 300
+            const innerRadius = width / 8
+            const outerRadius = width / 3
+
+            const innerRadiusFinal = width / 10
+            const outerRadiusFinal =  width / 2.8
+            // 进行数据转换
+            var pie =d3.pie()
+                       .sort(null)
+                       .value(function(d){ return d[1] })
+                      
+            var pieData = pie(data)
+            console.log(pieData)
+
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", width)
+                .attr("height",height)
+
+            //创建一个弧生成器
+            var arc = d3.arc()
+                            .innerRadius(innerRadius)
+                            .outerRadius(outerRadius)
+            // for animation
+             var arcFinal = d3.arc()
+                            .innerRadius(innerRadiusFinal)
+                            .outerRadius(outerRadiusFinal);
+
+            var color = d3.scaleOrdinal(d3.schemeCategory20)
+
+            //添加路径
+              //添加对应的弧组，即对应的弧元素<g>  
+              var arcs = svg.selectAll("g")
+                            .data(pieData)
+                            .enter()
+                            .append("g")
+                            .attr("transform", function(){
+                                return `translate(${ width /2 }, ${ height / 2})`
+                            })
+             //添加弧的路径元素
+              arcs.append("path")
+                   .attr("fill", function (d, i) { return color(i)})
+                   .attr("d", function (d) { return arc(d) })
+                   .on("click",function(d){
+                        console.log(d.data)
+                   })
+                   .on("mouseover", function(d){
+                        tooltip.html(d.data[0] +":"+d.data[1])
+                                .style("left", d3.event.pageX + "px")
+                                .style("top", d3.event.pageY + "px")
+                                .style("opacity", 1)
+                       d3.select(this).transition()
+                                        .duration(150)
+                                        .attr("d", arcFinal)                                              
+                   })
+                   .on("mouseout", function(){
+                        d3.select(this).transition()
+                                        .duration(150)
+                                        .attr("d", arc)
+                        tooltip.style("opacity", 0)
+                   })
+
+            //添加提示框
+            var tooltip = d3.select("body")
+                            .append("div")
+                            .attr("class", "tooltip")
+                            .style("opacity", 0)
+        </script>         
+    </body>
+</html>
