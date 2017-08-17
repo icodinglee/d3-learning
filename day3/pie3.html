@@ -8,13 +8,13 @@
     <style>
         .tooltip {
             position: absolute;
-            width: 100;
+            width: 100px;
             height: auto;
             font-size: 14px;
             text-align: center;
-            border: 1px solid #111;
+            border: 1px solid #666;
             border-radius: 5px;
-            background-color: #fff
+            background:rgba(255, 255, 255, 0.5)
         }
     </style>
     <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -34,7 +34,7 @@
                        .value(function(d){ return d[1] })
                       
             var pieData = pie(data)
-            console.log(pieData)
+
 
             var svg = d3.select("body")
                 .append("svg")
@@ -70,8 +70,8 @@
                    })
                    .on("mouseover", function(d){
                         tooltip.html(d.data[0] +":"+d.data[1])
-                                .style("left", d3.event.pageX + "px")
-                                .style("top", d3.event.pageY + "px")
+                                .style("left", d3.event.pageX + 20+ "px")
+                                .style("top", d3.event.pageY + 20 + "px")
                                 .style("opacity", 1)
                        d3.select(this).transition()
                                         .duration(150)
