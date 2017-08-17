@@ -83,12 +83,28 @@
                                         .attr("d", arc)
                         tooltip.style("opacity", 0)
                    })
+                    
+            //添加文字
+              arcs.append("text")
+                   .attr("transform", function(d){ 
+                       var x = arc.centroid(d)[0] 
+                       var y = arc.centroid(d)[1] 
+                       return `translate(${x}, ${y})`
+                   })
+                  .text(function(d){
+                        var percent =  Number(d.value) / d3.sum(data, function(d){ return d[1]}) *100
+                        return percent.toFixed(2) + "%"
+                  })
+                  .attr("text-anchor", "middle")
+                  .attr("fill", "#fff")
+                  .style("font-size", "10px")
 
             //添加提示框
             var tooltip = d3.select("body")
                             .append("div")
                             .attr("class", "tooltip")
                             .style("opacity", 0)
+    
         </script>         
     </body>
 </html>
