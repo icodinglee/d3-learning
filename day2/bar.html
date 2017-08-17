@@ -122,18 +122,18 @@
                 .text(function(d){
                     return d.y
                 })
-
-        //  var brush = svg.append("g")
-        //      .attr("class", "brush")
-        //     .call(d3.brushX()
-        //             .on("start", function(){ 
+    //框选事件不能与点击和鼠标移入移除事件同时存在
+         var brush = svg.append("g")
+             .attr("class", "brush")
+            .call(d3.brushX()
+                    .on("start", function(){ 
                         
-        //             })
-        //             .on("end", function(e) {
-        //                 var selection = d3.event.selection;
-        //                 console.log(selection)
-        //             })
-        //     )
+                    })
+                    .on("end", function(e) {
+                        var selection = d3.event.selection;
+                        console.log(selection)
+                    })
+            )
     </script>
   </body>
 </html>
