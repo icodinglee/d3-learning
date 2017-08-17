@@ -2,3 +2,4 @@
 
 - 基本介绍 [day1](http://www.jianshu.com/p/9a8284269cae)
 - 柱状图 [day2](http://www.jianshu.com/p/88f305000465)
+- 饼图 [day3](http://www.jianshu.com/p/da8cf818aa65)
