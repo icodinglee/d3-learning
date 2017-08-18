@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <style>
+  body{
+      font-family: "helvetica";
+    }
+
+    svg {
+        box-sizing: content-box
+    }
+
+   .selected{
+      stroke: red;
+      fill: red
+    }
+  </style>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src='../data/day4.js'></script>
+  <body>
+    <script>
+    const data = line_data;
+
+    var initWidth = 340
+    var initHeight = 500
+
+    var padding = { left:40, top:10, right:10, bottom: 20}
+
+    var height = initWidth - padding.top - padding.bottom
+    var width  = initHeight - padding.left - padding.right
+
+
+    var svg = d3.select("body")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .style("padding-left", padding.left)
+                .style("padding-right", padding.right)
+                .style("padding-top", padding.top)
+                .style("padding-bottom", padding.bottom)
+    
+
+     //添加y轴坐标轴 
+        
+        //y轴比例尺
+        let nums = [...data[0]["gdp"], ...data[1]["gdp"]].map(function(e){
+            return e[1]
+        })
+        let yScale = d3.scaleLinear()
+         .domain([0, d3.max(nums)])
+         .range([height , 0]);
+         
+         let _yScale = d3.scaleLinear()
+         .domain([0, d3.max(nums)])
+         .range([0, height]); 
+
+        //定义y轴
+        let yAxis = d3.axisLeft(yScale);
+
+        //添加y轴
+        svg.append("g")
+        .attr("class","axis")
+        .attr("transform","translate(" + 0 + "," + 0 + ")")
+        .call(yAxis);
+
+     //添加x轴坐标轴
+
+         //x轴比例尺
+         let years = data[0]["gdp"].map(function(e){
+                    return e[0]
+          })
+         let xScale = d3.scaleBand()
+                        .domain(years)
+                        .rangeRound([0, width])
+                        .padding(0.1)
+        //定义x轴
+        let xAxis = d3.axisBottom(xScale)
+        
+        //添加x轴
+         svg.append("g")
+            .attr("class","axis--x")
+            .attr("transform","translate(" + "0 ," + height + ")")
+            .call(xAxis);
+
+        //--------------以下是绘制图形-------------
+
+        //创建一个直线生成器
+        var linePath = d3.line()
+                         .x( function(d){ return xScale(d[0])})
+                         .y( function(d){ return yScale(d[1])})
+
+        var colors = ["red", "yellow"]
+        
+        
+        //添加路径
+        svg.append("g").selectAll("path")
+            .data(data)
+            .enter()
+            .append("path")
+            .attr("stroke-width", 1)
+            .attr("stroke", function(d, i){
+                return d[i]
+            })
+            .attr("d", function(d){ 
+                return linePath(d.gdp)
+            })
+
+
+
+
+
+    </script>
+  </body>
+</html>

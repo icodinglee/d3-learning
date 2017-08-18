@@ -155,7 +155,7 @@
                     tempExchangVal = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = tempExchangVal;                 
-                    await timeout(100);
+                    await timeout(80);
                     svg.html("")
                     render(arr)
                 }
