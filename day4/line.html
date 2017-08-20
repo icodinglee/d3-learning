@@ -41,10 +41,10 @@
                 .style("padding-right", padding.right)
                 .style("padding-top", padding.top)
                 .style("padding-bottom", padding.bottom)
-    
 
-     //添加y轴坐标轴 
-        
+
+     //添加y轴坐标轴
+
         //y轴比例尺
         let nums = [...data[0]["gdp"], ...data[1]["gdp"]].map(function(e){
             return e[1]
@@ -52,10 +52,10 @@
         let yScale = d3.scaleLinear()
          .domain([0, d3.max(nums)])
          .range([height , 0]);
-         
+
          let _yScale = d3.scaleLinear()
          .domain([0, d3.max(nums)])
-         .range([0, height]); 
+         .range([0, height]);
 
         //定义y轴
         let yAxis = d3.axisLeft(yScale);
@@ -75,10 +75,10 @@
          let xScale = d3.scaleBand()
                         .domain(years)
                         .rangeRound([0, width])
-                        .padding(0.1)
+
         //定义x轴
         let xAxis = d3.axisBottom(xScale)
-        
+
         //添加x轴
          svg.append("g")
             .attr("class","axis--x")
@@ -89,23 +89,27 @@
 
         //创建一个直线生成器
         var linePath = d3.line()
-                         .x( function(d){ return xScale(d[0])})
+                          .curve(d3.curveCardinal.tension(0.5))
+                         .x( function(d){ return xScale(d[0]) })
                          .y( function(d){ return yScale(d[1])})
 
+
         var colors = ["red", "yellow"]
-        
-        
+
+
         //添加路径
         svg.append("g").selectAll("path")
             .data(data)
             .enter()
             .append("path")
-            .attr("stroke-width", 1)
-            .attr("stroke", function(d, i){
-                return d[i]
-            })
-            .attr("d", function(d){ 
+            .attr("transform","translate(0, 0)")
+            .attr("d", function(d){
                 return linePath(d.gdp)
+            })
+            .attr("fill", "none")
+            .attr("stroke-width", "2px")
+            .attr("stroke", function(d, i){
+              return colors[i]
             })
 
 
