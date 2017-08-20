@@ -140,7 +140,7 @@
                         })
 
         //添加circle
-        cover.selectAll("circle")
+       cover.selectAll("circle")
               .data(function(d){
                 for(var v in d) return d[v]
               })
@@ -237,7 +237,7 @@
                                     })
                                 })
 
-            //提示部分文字
+          //  提示部分文字
             let text  = detail.append("text")
                               .text(function(d, i){
                                 for(let v in d)
