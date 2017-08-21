@@ -109,7 +109,7 @@
             .attr("class", "grid")
             .attr("transform", "translate(0," + height + ")")
             .call(make_x_gridlines()
-                .tickSize(-height)
+                .tickSize(-height-100)
                 .tickFormat("")
             )
 
@@ -170,7 +170,7 @@
                   let self = this;
                   d3.select(this)
                       .transition()
-                      .duration(200)
+                      .duration(100)
                       .attr("r", d3.select(this).attr("r") * 1.6)
                   showtext.attr("x", function(){
                     return xScale(d[0])
@@ -193,7 +193,7 @@
               .on("mouseout",function(){
                 d3.select(this)
                   .transition()
-                  .duration(200)
+                  .duration(100)
                   .attr("r", d3.select(this).attr("r") / 1.6)
 
                 showtext.text("")
@@ -222,7 +222,7 @@
                                     circles._groups[0].forEach(function(e, i){
                                       d3.select(e)
                                           .transition()
-                                          .duration(200)
+                                          .duration(100)
                                           .attr("r", d3.select(e).attr("r") * 1.6 )
                                     })
                                 })
@@ -232,7 +232,7 @@
                                     circles._groups[0].forEach(function(e, i){
                                       d3.select(e)
                                         .transition()
-                                        .duration(200)
+                                        .duration(100)
                                         .attr("r", d3.select(e).attr("r") / 1.6 )
                                     })
                                 })
