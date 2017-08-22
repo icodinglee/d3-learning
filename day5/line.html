@@ -221,7 +221,7 @@
         let singleStep = width / (years.length-1)
 
         //这里使用节流函数，避免过多运算导致浏览器卡顿
-        document.getElementById('chart').onmouseover =throttle(function(e){
+        document.getElementById('chart').onmousemove =throttle(function(e){
               console.log(e.offsetX)
               e.stopPropagation();
               let t = Math.round((e.offsetX - padding.left) / singleStep)*singleStep
