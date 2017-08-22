@@ -4,7 +4,7 @@
 
  [day1简书地址](http://www.jianshu.com/p/9a8284269cae)
 
-数据更新
+**数据更新**
 
 ![数据更新](http://upload-images.jianshu.io/upload_images/5545478-8e6f11eb141f6775.gif?imageMogr2/auto-orient/strip)
 
