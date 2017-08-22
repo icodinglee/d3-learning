@@ -51,7 +51,8 @@
         border-radius: 5px;
         color: #fff;
         background:rgba(0, 0, 0, 0.8);
-        padding-bottom: 5px
+        padding-bottom: 5px;
+        transition: transform 0.2s
     }
   </style>
   <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -218,9 +219,11 @@
 
         //计算位置 便于吸附
         let singleStep = width / (years.length-1)
+
+        //这里使用节流函数，避免过多运算导致浏览器卡顿
         document.getElementById('chart').onmouseover =throttle(function(e){
+              console.log(e.offsetX)
               e.stopPropagation();
-              console.log(this)
               let t = Math.round((e.offsetX - padding.left) / singleStep)*singleStep
               detailLine.attr("transform","translate(" + t + "," + 0 + ")")
               let year = _xScale(t)
@@ -239,9 +242,11 @@
                    .style("opacity", 1)
         },50)
 
-          document.onclick= function(){
-            tooltip.style("opacity", 0)
-          }
+
+        //隐藏显示栏
+        document.onclick= function(){
+          tooltip.style("opacity", 0)
+        }
 
     </script>
   </body>
