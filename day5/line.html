@@ -181,7 +181,7 @@
                 .attr("width", 10)
                 .attr("height", 10)
                 .attr("fill", function(d, i){
-                  return i%2 == 0 ? colors[1] : colors[0]
+                  return i%2 == 0 ? colors[0] : colors[1]
                 })
                 .attr("transform", function(d, i){
                     return `translate(10, ${(i)*20})`
