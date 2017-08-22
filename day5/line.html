@@ -29,8 +29,8 @@
       stroke-width: 3
     }
     #grid line {
-      stroke: #aaa;
-      stroke-width: 2
+      stroke: #ccc;
+      stroke-width: 1
     }
     #grid .tick:nth-child(2) {
       display: none
@@ -133,7 +133,7 @@
         // gridlines in x axis function
         function make_x_gridlines() {
             return d3.axisBottom(xScale)
-                .ticks(10)
+                .ticks(years.length)
 
         }
 
@@ -145,7 +145,7 @@
                 .tickSize(-height)
                 .tickFormat("")
             )
-        //--------------以下是绘制图形-------------
+      //  --------------以下是绘制图形-------------
 
         //创建一个直线生成器
         var linePath = d3.line()
