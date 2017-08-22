@@ -62,3 +62,31 @@ const  line_data = [
     }
 
 ]
+
+
+
+//节流函数
+var throttle = function (fn, interval) {
+        var  timer, firstTime = true;
+
+        return function () {
+          var args = arguments;
+          var _me = this;
+
+           if ( firstTime ) {
+             fn.apply(_me, args)
+             return firstTime = false;
+           }
+
+           if ( timer ) {
+             return false
+           }
+
+           timer = setTimeout(function () {
+             clearTimeout(timer);
+             timer=null;
+             fn.apply(_me, args)
+           }, interval || 500)
+        }
+
+    }

@@ -21,21 +21,37 @@
       fill: red
     }
     .axis path {
-        stroke: #999;
+        stroke: steelblue;
         stroke-width: 1
     }
     .axis .tick line{
-      stroke: #aaa;
-      stroke-width: 1
+      stroke: steelblue;
+      stroke-width: 3
     }
-    .grid line {
+    #grid line {
       stroke: #aaa;
+      stroke-width: 2
     }
-    .grid path {
+    #grid .tick:nth-child(2) {
+      display: none
+    }
+    #grid path {
       display: none
     }
     .line_y .domain{
-        stroke: #777
+        stroke: yellow
+    }
+    .tooltip {
+        position: absolute;
+        min-width: 100px;
+        height: auto;
+        font-size: 14px;
+        text-align: center;
+        border: 1px solid #666;
+        border-radius: 5px;
+        color: #fff;
+        background:rgba(0, 0, 0, 0.8);
+        padding-bottom: 5px
     }
   </style>
   <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -98,6 +114,10 @@
                         .domain([2008,2017])
                         .rangeRound([0, width])
 
+        let _xScale =  d3.scaleLinear()
+                       .domain([0,width])
+                       .rangeRound([2008, 2017])
+
         //定义x轴
         let xAxis = d3.axisBottom(xScale).tickFormat(d3.format("d"))
 
@@ -118,7 +138,7 @@
 
         // add the X gridlines
       var grid =  svg.append("g")
-            .attr("class", "grid")
+            .attr("id", "grid")
             .attr("transform", "translate(0," + height + ")")
             .call(make_x_gridlines()
                 .tickSize(-height)
@@ -187,12 +207,42 @@
 
         var detailLine = svg.append("g")
                             .attr("class","line_y")
-                            .attr("transform","translate(" + 15 + "," + 0 + ")")
+                            .attr("transform","translate(" + width + "," + 0 + ")")
                             .call(yAxis.ticks(0).tickSize(0).tickFormat(""));
 
-        document.getElementById('chart').onmouseover =function(e){
-             document.getElementsByClassName("line_y")[0].setAttribute("transform", "translate(" + e.offsetX - padding.left + "," + 0 + ")")
-        }
+        //添加提示栏
+        var tooltip = d3.select("body")
+                        .append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0)
+
+        //计算位置 便于吸附
+        let singleStep = width / (years.length-1)
+        document.getElementById('chart').onmouseover =throttle(function(e){
+              e.stopPropagation();
+              console.log(this)
+              let t = Math.round((e.offsetX - padding.left) / singleStep)*singleStep
+              detailLine.attr("transform","translate(" + t + "," + 0 + ")")
+              let year = _xScale(t)
+              let currentHtml = []
+              data.forEach( (e) => {
+                  e.gdp.forEach( (ev, i) =>{
+                    if(ev[0]==year){
+                      currentHtml.push(`<div>${e.country}: ${ev[1]}</div>`);
+                    }
+                  })
+              })
+            currentHtml.unshift(`<div>${year}</div>`)
+            tooltip.html(currentHtml.join(""))
+                   .style("left", e.pageX + 20+ "px")
+                   .style("top", e.pageY + 20 + "px")
+                   .style("opacity", 1)
+        },50)
+
+          document.onclick= function(){
+            tooltip.style("opacity", 0)
+          }
+
     </script>
   </body>
 </html>
