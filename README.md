@@ -2,7 +2,7 @@
 
 ### 基本介绍
 
- [day1简书地址](http://www.jianshu.com/p/9a8284269cae)
+ [简书地址](http://www.jianshu.com/p/9a8284269cae)
 
 **数据更新**
 
@@ -13,7 +13,7 @@
 
 ### 柱状图
 
-[day2简书地址](http://www.jianshu.com/p/88f305000465)
+[简书地址](http://www.jianshu.com/p/88f305000465)
 
 **给柱状图添加事件**
 
@@ -28,7 +28,7 @@
 ![冒泡排序可视化动态展现](http://upload-images.jianshu.io/upload_images/5545478-7b8022a592d0fcc0.gif?imageMogr2/auto-orient/strip)
 
 ### 饼图
- [day3简书地址](http://www.jianshu.com/p/da8cf818aa65)
+ [简书地址](http://www.jianshu.com/p/da8cf818aa65)
 
 **饼图添加外部提示文字**
 
@@ -40,7 +40,7 @@
 
 
 ### 散点图
-[day4简书地址](http://www.jianshu.com/p/2fcc3f5ad161)
+[简书地址](http://www.jianshu.com/p/2fcc3f5ad161)
 
 **d3模仿echart气泡图**
 
@@ -53,6 +53,6 @@
 
 ### 折线图
 
-[day5简书地址]()
+[简书地址]()
 
 ![效果](http://chuantu.biz/t6/15/1503371160x3683573833.gif)
