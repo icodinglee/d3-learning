@@ -30,7 +30,7 @@
 
         var colorRange = d3.scaleLinear() //创建一个颜色的线性比例尺
         .domain([0,100])
-        .range(["#ccc", "#000"]);
+        .range(["#29B6F6", "#01579B"]);
 
         function render(data) {
         // Enter
@@ -46,7 +46,7 @@
              .style("width",function(d){
                 return dataRange(d) + "px"; //调用函数返回与该图形绑定的数据d
              })
-             .style("background-color",function(d){
+             .style("background-color",function(d,i){
                 return colorRange(d); //调用函数返回与该图形绑定的数据d
              })
              .select("span")

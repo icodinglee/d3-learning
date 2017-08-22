@@ -6,7 +6,7 @@
 
 **数据更新**
 
-![数据更新](http://upload-images.jianshu.io/upload_images/5545478-8e6f11eb141f6775.gif?imageMogr2/auto-orient/strip)
+![数据更新](http://chuantu.biz/t6/16/1503373533x3683573833.gif)
 
 
 
