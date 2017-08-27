@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <style>
+  body{
+      font-family: "helvetica";
+    }
+
+    svg {
+        box-sizing: content-box
+    }
+  .axis--x path {
+    display: none;
+  }
+  .grid .domain {
+    display: none
+  }
+  .grid .tick line{
+    stroke:#ccc
+  }
+  </style>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src='../data/day6.js'></script>
+  <body>
+    <script>
+    const data =bar_data;
+    console.log(data)
+    var initWidth = 340
+    var initHeight = 500
+
+    var padding = { left:70, top:10, right:10, bottom: 20}
+
+    var height = initWidth - padding.top - padding.bottom
+    var width  = initHeight - padding.left - padding.right
+
+
+    var svg = d3.select("body")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .style("padding-left", padding.left)
+                .style("padding-right", padding.right)
+                .style("padding-top", padding.top)
+                .style("padding-bottom", padding.bottom)
+
+
+     //添加y轴坐标轴
+
+        //y轴比例尺
+        let ydata = data.map(function(e, i){ return e.country })
+
+        let yScale = d3.scaleBand()
+                       .domain(ydata)
+                       .rangeRound([0, height])
+                       .padding(0.6)
+
+        //定义y轴
+        let yAxis = d3.axisLeft(yScale).ticks(0).tickSize(0)
+
+        //添加y轴
+        svg.append("g")
+            .attr("class","axis-y")
+            .call(yAxis);
+
+       let xData = data.map(function(e, i){ return e.proportion })
+        let xScale = d3.scaleLinear()
+                      .domain([0, d3.max(xData)*1.2])
+                      .range([0, width])
+
+
+      //添加网格
+      // gridlines in x axis function
+      function make_x_gridlines() {
+          return d3.axisBottom(xScale)
+              .ticks(5)
+      }
+
+
+      // add the X gridlines
+      svg.append("g")
+          .attr("class", "grid")
+          .attr("transform", "translate(0," + height + ")")
+          .call(make_x_gridlines()
+              .tickSize(-height)
+              .tickFormat("")
+          )
+
+      var rect =svg.append("g")
+
+               rect.selectAll("rect")
+                    .data(data)
+                    .enter()
+                    .append("rect")
+                    .attr("x", 0)
+                    .attr("y", function(d, i){ return yScale(d.country)})
+                    .attr("height", yScale.bandwidth())
+                    .attr("width", function(d){
+                        return xScale(d.proportion)
+                    })
+                    .attr("fill", "steelBlue")
+
+    var text = rect.selectAll("text")
+                    .data(data)
+                    .enter()
+                    .append("text")
+                    .attr("x", function(d, i){return xScale(d.proportion)})
+                    .attr("y", function(d, i){return yScale(d.country)})
+                    .text(function(d, i){ return d.proportion*100 +"%"})
+                    .attr("fill", function(){
+                      return '#333'
+                    })
+                    .attr("font-size", '12px')
+                    .attr("text-anchor", "middle")
+                    .attr("dy","1.2em" )
+                    .attr("dx","2em" )
+
+
+
+    </script>
+  </body>
+</html>
