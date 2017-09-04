@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="http://d3js.org/d3.v4.min.js"></script>
+    </head>
+    <style>
+        .tooltip {
+            position: absolute;
+            width: 100px;
+            height: auto;
+            font-size: 14px;
+            text-align: center;
+            border: 1px solid #666;
+            border-radius: 5px;
+            line-height: 24px;
+            padding:5px;
+            color:beige;
+            background:rgba(0, 0, 0, 0.7)
+        }
+    </style>
+    <body>
+        <script>
+            //创建svg
+            var width = 960, height = 500;
+
+            var svg = d3.select("body")
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", height);
+
+            //创建颜色比例尺
+            var colors = d3.scaleOrdinal(d3.schemeCategory20)
+            
+            
+    let L_json = "https://raw.githubusercontent.com/waylau/svg-china-map/master/china-map/china.geo.json";
+    let P_json = "https://raw.githubusercontent.com/icodinglee/function-test/master/map.json";
+
+     //创建投影(projection)
+     var projection = d3.geoMercator().translate([width / 2, height / 2]).center([105, 38]).scale(550);
+     //创建path
+     var path = d3.geoPath().projection(projection);
+
+     //解析地理位置json
+     d3.json(L_json, function(json) {
+        svg.selectAll("path")
+                .data(json.features)
+                .enter()
+                .append("path")
+                .attr("d", path)
+                .attr('fill', function(d, i){return colors(i)})
+                .attr('stroke', 'rgba(255,255,255,1)')
+                .attr('stroke-width', 1)
+     })
+
+     //插入坐标点
+     d3.json(P_json, function(error, places) {
+         //插入分组元素
+        var location = svg.selectAll(".location")
+                            .data(places.location)
+                            .enter()
+                            .append("g")
+                            .attr("class","location")
+                            .attr("transform",function(d){
+                                //计算标注点的位置
+                                var coor = projection([d.log, d.lat]);
+                                return "translate("+ coor[0] + "," + coor[1] +")";
+                            });
+
+        //插入一个圆
+        location.append("circle")
+                .attr("r",8)
+                .attr("fill", "#E91E63")
+                .attr("class","location")
+                .on("mouseover", function(d){
+                    tooltip.html("当前城市：" + d.name)
+                            .style("left", d3.event.pageX + 20+ "px")
+                            .style("top", d3.event.pageY + 20 + "px")
+                            .style("opacity", 1)
+                    d3.select(this).transition().duration(150).attr("r", 12)
+                })
+                .on("mouseout", function(){
+                    tooltip.style("opacity", 0)
+                    d3.select(this).transition().duration(150).attr("r", 8)
+                })             
+     }); //end of P_json
+     
+
+      //添加提示框
+    var tooltip = d3.select("body")
+                            .append("div")
+                            .attr("class", "tooltip")
+                            .style("opacity", 0)
+    //添加标题
+    var title = svg.append("text")
+                    .attr("x", width/2)
+                    .attr("y", 40)
+                    .style("text-anchor", "middle")
+                    .text("中国地图")
+
+        </script>
+    </body>
+</html>
