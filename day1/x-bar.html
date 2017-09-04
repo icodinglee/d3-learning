@@ -21,6 +21,9 @@
   .grid .tick line{
     stroke:#ccc
   }
+  .axis-y .tick text{
+      fill: 'red'
+  }
   </style>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src='../data/day6.js'></script>
@@ -31,7 +34,7 @@
     var initWidth = 340
     var initHeight = 500
 
-    var padding = { left:70, top:10, right:10, bottom: 20}
+    var padding = { left:100, top:10, right:10, bottom: 20}
 
     var height = initWidth - padding.top - padding.bottom
     var width  = initHeight - padding.left - padding.right
@@ -98,15 +101,20 @@
                     .attr("y", function(d, i){ return yScale(d.country)})
                     .attr("height", yScale.bandwidth())
                     .attr("width", function(d){
-                        return xScale(d.proportion)
+                        return 0
                     })
                     .attr("fill", "steelBlue")
+                    .transition()
+                    .duration(800)
+                    .attr("width", function(d){
+                      return xScale(d.proportion)
+                  })
 
     var text = rect.selectAll("text")
                     .data(data)
                     .enter()
                     .append("text")
-                    .attr("x", function(d, i){return xScale(d.proportion)})
+                    .attr("x", function(d, i){return 0})
                     .attr("y", function(d, i){return yScale(d.country)})
                     .text(function(d, i){ return d.proportion*100 +"%"})
                     .attr("fill", function(){
@@ -116,8 +124,12 @@
                     .attr("text-anchor", "middle")
                     .attr("dy","1.2em" )
                     .attr("dx","2em" )
+                    .transition()
+                    .duration(800)
+                    .attr("x", function(d, i){return xScale(d.proportion)})
 
 
+d3.selectAll('.axis-y .tick text').attr("font-size", 14).attr("dx", '-0.4em')
 
     </script>
   </body>

@@ -90,7 +90,7 @@
                   })
                   .attr("width", xScale.bandwidth())
                   .attr("height", function(d){
-                      return _yScale(d.y)
+                    return _yScale(d.y)
                   })
                   .attr("fill", "steelBlue")
                   .on("click",function(d){
@@ -102,6 +102,7 @@
                   .on("mouseout", function(){
                       d3.select(this).attr("fill","steelBlue")
                   })
+
      
 
     var text = svg.append("g").selectAll("text")
@@ -122,6 +123,8 @@
                 .text(function(d){
                     return d.y
                 })
+
+
     //框选事件不能与点击和鼠标移入移除事件同时存在
          var brush = svg.append("g")
              .attr("class", "brush")
