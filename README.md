@@ -55,4 +55,11 @@
 
 [简书地址](http://www.jianshu.com/p/869f79e8bb39)
 
-![效果](http://chuantu.biz/t6/17/1503454009x3683573833.gif)
+![效果](http://upload-images.jianshu.io/upload_images/5545478-62a8eaabffb6fdaa.gif?imageMogr2/auto-orient/strip)
+
+
+### 区域图
+
+[简书地址](http://www.jianshu.com/p/1da36572674b)
+
+![折线图与区域图结合显示价格波动区间](http://upload-images.jianshu.io/upload_images/5545478-198cd0e920b6bda1.gif?imageMogr2/auto-orient/strip)
