@@ -63,3 +63,9 @@
 [简书地址](http://www.jianshu.com/p/1da36572674b)
 
 ![折线图与区域图结合显示价格波动区间](http://upload-images.jianshu.io/upload_images/5545478-198cd0e920b6bda1.gif?imageMogr2/auto-orient/strip)
+
+### 带插入点的中国地图[day7]
+
+[简书地址](http://www.jianshu.com/p/7eb85abcee1d)
+
+![带提示框的中国地图](http://upload-images.jianshu.io/upload_images/5545478-9556aba02ac95925.gif?imageMogr2/auto-orient/strip)
