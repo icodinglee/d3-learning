@@ -27,7 +27,7 @@
 
 ![冒泡排序可视化动态展现](http://upload-images.jianshu.io/upload_images/5545478-7b8022a592d0fcc0.gif?imageMogr2/auto-orient/strip)
 
-### 饼图
+### 饼图[day3]
  [简书地址](http://www.jianshu.com/p/da8cf818aa65)
 
 **饼图添加外部提示文字**
@@ -39,7 +39,7 @@
  ![添加交互效果](http://upload-images.jianshu.io/upload_images/5545478-19fd8ce43278380b.gif?imageMogr2/auto-orient/strip)
 
 
-### 散点图
+### 散点图[day4]
 [简书地址](http://www.jianshu.com/p/2fcc3f5ad161)
 
 **d3模仿echart气泡图**
@@ -51,14 +51,14 @@
 ![添加框选事件](http://upload-images.jianshu.io/upload_images/5545478-5f59bf258c601931.gif?imageMogr2/auto-orient/strip)
 
 
-### 折线图
+### 折线图[day5]
 
 [简书地址](http://www.jianshu.com/p/869f79e8bb39)
 
 ![效果](http://upload-images.jianshu.io/upload_images/5545478-62a8eaabffb6fdaa.gif?imageMogr2/auto-orient/strip)
 
 
-### 区域图
+### 区域图[day6]
 
 [简书地址](http://www.jianshu.com/p/1da36572674b)
 
