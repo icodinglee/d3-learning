@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title> 
+</head>
+<body>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src='../data/day8.js'></script>
+    <script>
+        const width = 500,
+              height = 500;
+
+        var svg  = d3.select('body')
+                    .append('svg')
+                    .attr('width', width)
+                    .attr('height', height);
+        
+        // 通过布局来转换数据，然后进行绘制
+        var simulation = d3.forceSimulation(nodes) // 根据指定的节点数组创建一个没有作用力的仿真
+                .force("link", d3.forceLink(links).distance(100).strength(1).id((d)=>d.name))  // 连线作用力
+                .force("charge",d3.forceManyBody())  // 节点间的作用力
+                .force("center",d3.forceCenter(width / 2, height / 2)); //重力，布局的参考位置，力导向图的中心点
+
+
+        var color = d3.scaleOrdinal(d3.schemeCategory20);  
+
+        // 绘制
+        var svg_links = svg.selectAll("line")
+            .data(links)
+            .enter()
+            .append("line")
+            .style("stroke","#ccc")
+            .style("stroke-width",1);
+
+        function dragstarted(d) {
+          if (!d3.event.active) simulation.alphaTarget(0.8).restart(); // 在交互时重新启动仿真，比如拖拽了某个节点或使用simulation.stop暂停仿真之后进行重新调整布局
+          d.fx = d.x;
+          d.fy = d.y;
+        };
+
+        function dragged(d) {
+            d.fx = d3.event.x; // 设置当前位置
+            d.fy = d3.event.y;
+        };
+
+        function dragended(d) { //  在仿真过程中，alpha值会不断减小，当alpha小于最小alpha值时，仿真会停止。
+            if (!d3.event.active) simulation.alphaTarget(0); // https://stackoverflow.com/questions/42605261/d3-event-active-purpose-in-drag-dropping-circles
+            d.fx = null;
+            d.fy = null;
+        };
+
+        var svg_nodes = svg.selectAll("circle")
+            .data(nodes)
+            .enter()
+            .append("circle")
+            .attr("r",10)
+            .style("fill",function(d,i){
+                return color(i);
+            })    
+            .attr("cx",function(d){return d.x;})
+            .attr("cy",function(d){return d.y;})
+            .call(d3.drag().on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+        
+        var svg_text = svg.selectAll("text")
+            .data(nodes)
+            .enter()
+            .append("text")
+            .style("fill","#000")
+            .attr('font-size', '12px')
+            .attr("dx",0)
+            .attr("dy",20)
+            .attr('text-anchor', 'middle')
+            .text(function(d){return d.name;});
+
+        function draw(){
+            svg_nodes
+                .attr("cx",function(d){return d.x;})
+                .attr("cy",function(d){return d.y;});
+
+            svg_text
+                .attr("x", function(d){ return d.x; })
+                    .attr("y", function(d){ return d.y; });
+
+            svg_links
+                .attr("x1",function(d){return d.source.x; })
+                .attr("y1",function(d){ return d.source.y; })
+                .attr("x2",function(d){ return d.target.x; })
+                .attr("y2",function(d){ return d.target.y; });
+    }
+
+      simulation.on("tick",draw); // 力导向图布局的形成是一个异步的过程而且需要一定时间几秒钟
+    
+
+    </script>
+</body>
+</html>
