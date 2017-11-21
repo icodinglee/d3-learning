@@ -69,3 +69,8 @@
 [简书地址](http://www.jianshu.com/p/7eb85abcee1d)
 
 ![带提示框的中国地图](http://upload-images.jianshu.io/upload_images/5545478-9556aba02ac95925.gif?imageMogr2/auto-orient/strip)
+
+### 力导向图
+
+![简书地址](http://www.jianshu.com/p/18cb814fe4ef)
+![带箭头的力导向图](http://upload-images.jianshu.io/upload_images/5545478-c52555cfdfac15a6.gif?imageMogr2/auto-orient/strip)

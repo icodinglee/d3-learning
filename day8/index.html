@@ -33,7 +33,8 @@
             .enter()
             .append("line")
             .style("stroke","#ccc")
-            .style("stroke-width",1);
+            .style("stroke-width",1)
+            .attr('marker-end', 'url(#arrow)')
 
         function dragstarted(d) {
           if (!d3.event.active) simulation.alphaTarget(0.8).restart(); // 在交互时重新启动仿真，比如拖拽了某个节点或使用simulation.stop暂停仿真之后进行重新调整布局
@@ -62,6 +63,7 @@
             })    
             .attr("cx",function(d){return d.x;})
             .attr("cy",function(d){return d.y;})
+            .on('click', ()=> console.log(123))
             .call(d3.drag().on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended));
@@ -95,7 +97,25 @@
 
       simulation.on("tick",draw); // 力导向图布局的形成是一个异步的过程而且需要一定时间几秒钟
     
+ // 添加箭头
+    //添加defs标签  
+    var defs = svg.append("defs");  
+    //添加marker标签及其属性  
+    var arrowMarker = defs.append("marker")  
+        .attr("id","arrow")  
+        .attr("markerUnits","strokeWidth")  
+        .attr("markerWidth",12)  
+        .attr("markerHeight",12)  
+        .attr("viewBox","0 0 12 12")  
+        .attr("refX",20)  
+        .attr("refY",6)  
+        .attr("orient","auto")
 
+    //绘制直线箭头  
+    var arrow_path = "M2,2 L10,6 L2,10 L6,6 L2,2";  
+    arrowMarker.append("path")  
+        .attr("d",arrow_path)  
+        .attr("fill","red") 
     </script>
 </body>
 </html>
